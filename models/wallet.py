@@ -5,6 +5,10 @@ class Wallet:
     """
     this class is intended to act as a paper trading
     wallet for historic trade strategy analysis
+
+    TO-DO:
+        - log initial transaction when wallet is
+          initialized with init_cash_amount
     """
     def __init__(self, token: str, init_cash_amount: float):
         self.__cbclient = CBClient()
@@ -12,7 +16,7 @@ class Wallet:
         self.__cash_amount = init_cash_amount
         self.__num_trades = 0
         # transactions will act as a history of trades by date
-        self.__txns = set()
+        self.__txns = []
         self.__total_volume = 0
 
     def buy(self, volume: float, date: str):
@@ -41,6 +45,18 @@ class Wallet:
         self.__num_trades += 1
         return True
     
+    def get_transactions(self):
+        return self.__txns
+
+    def get_token(self):
+        return self.__token
+
+    def get_cash_amount(self):
+        return self.__cash_amount
+    
+    def get_total_volume(self):
+        return self.__total_volume
+    
     def __is_valid_buy(self, buy_amount: float):
         return buy_amount <= self.__cash_amount
 
@@ -49,7 +65,7 @@ class Wallet:
     
     def __log_transaction(self, txn_type: str, amount: float, volume: float):
         txn = Transaction(txn_type, amount, volume)
-        self.__txns.add(txn)
+        self.__txns.append(txn)
     
     def __repr__(self):
         s = f"""
