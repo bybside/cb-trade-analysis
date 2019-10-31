@@ -1,4 +1,5 @@
 from models.cbclient import CBClient
+from models.transaction import Transaction
 
 class Wallet:
     """
@@ -11,7 +12,7 @@ class Wallet:
         self.__cash_amount = init_cash_amount
         self.__num_trades = 0
         # transactions will act as a history of trades by date
-        self.__txns = {}
+        self.__txns = set()
         self.__total_volume = 0
 
     def buy(self, volume: float, date: str):
@@ -23,7 +24,7 @@ class Wallet:
             return False
         self.__cash_amount -= buy_total
         self.__total_volume += volume
-        self.__txns[date] = self.__txns.get(date, 0) + volume
+        self.__log_transaction("BUY", -buy_total, volume)
         self.__num_trades += 1
         return True
 
@@ -36,7 +37,7 @@ class Wallet:
         sell_total = volume * price
         self.__total_volume -= volume
         self.__cash_amount += sell_total
-        self.__txns[date] = self.__txns.get(date, 0) - volume
+        self.__log_transaction("SELL", sell_total, volume)
         self.__num_trades += 1
         return True
     
@@ -45,6 +46,10 @@ class Wallet:
 
     def __is_valid_sell(self, sell_amount: float):
         return sell_amount <= self.__total_volume
+    
+    def __log_transaction(self, txn_type: str, amount: float, volume: float):
+        txn = Transaction(txn_type, amount, volume)
+        self.__txns.add(txn)
     
     def __repr__(self):
         s = f"""

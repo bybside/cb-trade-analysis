@@ -1,5 +1,4 @@
 # import coinbase.wallet.client
-from models.cbclient import CBClient
 from models.wallet import Wallet
 
 def main():
