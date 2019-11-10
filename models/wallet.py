@@ -1,5 +1,6 @@
 from models.cbclient import CBClient
 from models.transaction import Transaction
+from models.transaction_types import TransactionTypes
 
 class Wallet:
     """
@@ -28,7 +29,7 @@ class Wallet:
             return False
         self.__cash_amount -= buy_total
         self.__total_volume += volume
-        self.__log_transaction("BUY", -buy_total, volume)
+        self.__log_transaction(TransactionTypes.BUY, -buy_total, volume)
         self.__num_trades += 1
         return True
 
@@ -41,7 +42,7 @@ class Wallet:
         sell_total = volume * price
         self.__total_volume -= volume
         self.__cash_amount += sell_total
-        self.__log_transaction("SELL", sell_total, volume)
+        self.__log_transaction(TransactionTypes.SELL, sell_total, volume)
         self.__num_trades += 1
         return True
     
