@@ -1,11 +1,21 @@
-install coinbase library (supported by coinbase):
-    -pip3 install coinbase
+SETUP:
+    - install coinbase library (supported by coinbase):
+        - pip3 install coinbase
 
-API endpoint:
-    -https://api.coinbase.com/v2/
+    - api endpoint:
+        - https://api.coinbase.com/v2/
 
-Data enpoints:
-    -https://developers.coinbase.com/api/v2?shell#data-endpoints
+    - data enpoints:
+        - https://developers.coinbase.com/api/v2?shell#data-endpoints
 
-official python client library:
-    -https://github.com/coinbase/coinbase-python
+    - official python client library:
+        - https://github.com/coinbase/coinbase-python
+
+    - dbvisualizer installation:
+        - https://www.dbvis.com/download/10.0
+
+NOTES:
+    - look into pandas for further transaction analysis, e.g.:
+        - average change in price
+        - average percent change in price
+        

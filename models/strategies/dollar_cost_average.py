@@ -6,15 +6,16 @@ class DollarCostAverage(Strategy):
     basic strategy will buy a predefined volume
     once a month and will never sell
     """
-    def __init__(self, token: str, init_cash_amount: float, buy_volume: float, start_date: str, end_date: str):
+    def __init__(self, token: str, init_cash_amount: float, buy_volume: float, freq: str, start_date: str, end_date: str):
         Strategy.__init__(self, token, init_cash_amount)
         self.__buy_volume = buy_volume
+        self.__freq = freq
         self.__start_date = start_date
         self.__end_date = end_date
 
     def run(self):
         start_amount = self.wallet.get_cash_amount()
-        daterange = pd.date_range(self.__start_date, self.__end_date, freq="M")
+        daterange = pd.date_range(self.__start_date, self.__end_date, freq=self.__freq)
         for date in daterange:
             date = date.strftime("%Y-%m-%d")
             self.wallet.buy(self.__buy_volume, date)
@@ -32,6 +33,7 @@ class DollarCostAverage(Strategy):
             token:       {self.wallet.get_token()}
             cash_amount: {self.wallet.get_cash_amount()}
             buy_volume:  {self.__buy_volume}
+            freq:        {self.__freq}
             start_date:  {self.__start_date}
             end_date:    {self.__end_date}
             ror:         {self.ror}%
